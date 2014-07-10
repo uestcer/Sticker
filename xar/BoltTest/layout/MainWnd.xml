@@ -1,0 +1,119 @@
+<xlue>
+	<control class="MainWndCtrl">
+		<attr_def>
+		</attr_def>
+		<method_def>
+		</method_def>
+		<event_def>
+		</event_def>
+		<objtemplate>
+			<children>
+				<obj id="root" class="LayoutObject">
+					<attr>
+						<left>0</left>
+						<top>0</top>
+						<width>father.width</width>
+						<height>father.height</height>
+					</attr>
+					<children>
+						<obj id="bkg.shadow" class="TextureObject">
+							<attr>
+								<left>0</left>
+								<top>0</top>
+								<width>father.width</width>
+								<height>father.height</height>
+								<texture>Texture.BoltTest.Bkg.Shadow</texture>
+							</attr>
+						</obj>
+						<obj id="bkg" class="TextureObject">
+							<attr>
+								<left>5</left>
+								<top>5</top>
+								<width>father.width-10</width>
+								<height>father.height-10</height>
+								<texture>Texture.BoltTest.Bkg.White</texture>
+								<limitchild>1</limitchild>
+							</attr>
+							<children>
+								<obj id="caption" class="CaptionObject">
+									<attr>
+										<left>0</left>
+										<top>0</top>
+										<width>father.width</width>
+										<height>father.height</height>
+									</attr>
+								</obj>
+								<obj id="CloseBtn" class="TextureObject">
+									<attr>
+										<left>father.width-80</left>
+										<top>0</top>
+										<width>80</width>
+										<height>30</height>
+										<texture>Texture.BoltTest.Btn.Blue</texture>
+									</attr>
+									<eventlist>
+										<event name="OnLButtonDown" file="MainWnd.xml.lua" func="CloseBtn_OnLButtonDown" />
+									</eventlist>
+								</obj>
+								<obj id="Test.Texture" class="TextureObject">
+									<attr>
+										<left>0</left>
+										<top>0</top>
+										<width>200</width>
+										<height>100</height>
+										<texture>Texture.Red.Shadow</texture>
+									</attr>
+								</obj>
+							</children>
+						</obj>
+					</children>
+				</obj>
+			</children>
+			<eventlist>
+				<event name="OnInitControl" file="MainWnd.xml.lua" func="OnInitControl" />
+			</eventlist>
+		</objtemplate>
+	</control>
+	
+	<objtreetemplate id="MainWndTree" class="ObjectTreeTemplate">
+		<attr>
+			<left>-200</left>
+			<top>-200</top>
+			<width>2000</width>
+			<height>2000</height>
+		</attr>
+		<obj id="ctrl" class="MainWndCtrl">
+			<attr>
+				<left>0</left>
+				<top>0</top>
+				<width>0</width>
+				<height>0</height>
+			</attr>
+			<eventlist>
+			</eventlist>
+		</obj>
+	</objtreetemplate>
+	
+	<hostwndtemplate id="MainWndHostWnd" class="FrameHostWnd">
+		<attr>
+			<appwindow>1</appwindow>
+			<center>1</center>
+			<layered>1</layered>
+			<left>640</left>
+			<top>300</top>
+			<width>640</width>
+			<height>480</height>
+			<topmost>0</topmost>
+			<visible>1</visible>
+			<enable>1</enable>
+			<maxbox>0</maxbox>
+			<minbox>0</minbox>
+			<minwidth>300</minwidth>
+			<minheight>300</minheight>
+			<fps>30</fps>
+		</attr>
+		<eventlist>
+			<event name="OnSize" file="MainWnd.xml.lua" func="MainWndHostWnd_OnSize" />
+		</eventlist>
+	</hostwndtemplate>
+</xlue>
