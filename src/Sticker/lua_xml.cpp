@@ -1,4 +1,5 @@
 #include "lua_xml.h"
+#include <map>
 
 static XLLRTGlobalAPI LuaXmlFunctions[] = {
 	{"GetXml", LuaXML::GetXml},
@@ -57,18 +58,31 @@ bool LuaXML::ConvertXmlElemToLuaTable( tinyxml2::XMLElement *pElem, lua_State* l
 		return false;
 	}
 
+	std::map<std::string> countMap;
+	tinyxml2::XMLElement* pCountElem = pElem->FirstChildElement();
+	while(pCountElem)
+	{
+		const char* strName = pCountElem->Name();
+		pCountElem = pCountElem->NextSiblingElement();
+	}
+
+	lua_newtable(luaState);
 	tinyxml2::XMLElement* iterElem = pElem->FirstChildElement();
 	while(iterElem)
 	{
 		const char* strName = iterElem->Name();
-		if (iterElem->NoChildren())
+		const char* strText = iterElem->GetText();
+		if (strText)
 		{
-			const char* strText = iterElem->GetText();
+			lua_pushstring(luaState, strName);
+			lua_pushstring(luaState, strText);
 		}
 		else
 		{
-			ConvertXmlElemToLuaTable(pElem, luaState);
+			lua_pushstring(luaState, strName);
+			ConvertXmlElemToLuaTable(iterElem, luaState);
 		}
+		lua_settable(luaState, -3);
 		iterElem = iterElem->NextSiblingElement();
 	}
 	return true;
