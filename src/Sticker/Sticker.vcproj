@@ -212,11 +212,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\xml.cpp"
+					RelativePath=".\tinyxml2.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\xml.h"
+					RelativePath=".\tinyxml2.h"
 					>
 				</File>
 			</Filter>
@@ -235,6 +235,10 @@
 					RelativePath=".\transcode.h"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="log"
+				>
 			</Filter>
 		</Filter>
 		<Filter

@@ -15,7 +15,7 @@
 #include <shlwapi.h>
 
 #include "lua_filesystem.h"
-#include "xml.h"
+#include "lua_xml.h"
 
 bool InitXLUE();
 void UninitXLUE();
@@ -96,6 +96,7 @@ bool InitXLUE()
 
 	XL_LRT_ENV_HANDLE hEnv = XLLRT_GetEnv(NULL);
 	LuaFileSystem::RegisterObject(hEnv);
+	LuaXML::RegisterObject(hEnv);
 	XLLRT_ReleaseEnv(hEnv);
 
 	return true; 
