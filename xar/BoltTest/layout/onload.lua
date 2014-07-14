@@ -20,8 +20,10 @@ function Main()
 	frameHostWnd:Create()
 	
 	local xmlObj = XLGetObject("Sticker.Helper.Xml")
-	local dataTable = xmlObj:GetXml([[C:\Users\Dongyu\Desktop\dream.xml]])
-	print_lua_table(dataTable)
+	local xmlTable = {}
+	xmlTable.a = 1
+	xmlTable.b = 2
+	local dataTable = xmlObj:SetXml([[C:\Users\Winter\Desktop\135213341.xml]], xmlTable)
 	
 	return true
 end
