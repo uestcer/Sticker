@@ -160,7 +160,8 @@ int LuaXML::GetXml( lua_State* luaState )
 		lua_pushstring(luaState, strName);
 		ConvertXmlElemToLuaTable(pDoc->RootElement(), luaState);
 		lua_settable(luaState, -3);
-
+		
+		pDoc->Clear();
 		bRet = 1;
 	}while(false);
 	return bRet;
@@ -189,7 +190,17 @@ int LuaXML::SetXml( lua_State* luaState )
 		lua_pushnil(luaState);
 		while(0 != lua_next(luaState, nIndex))
 		{
-			const char* strKey = luaL_checkstring(luaState, -2);
+			int nKeyType = lua_type(luaState, -2);
+			int nValueType = lua_type(luaState, -1);
+			if (nKeyType == LUA_TNUMBER)
+			{
+				int nKey = luaL_checkint(luaState, -2);
+				nKey ++;
+			}
+			else if (nKeyType == LUA_TSTRING)
+			{
+				const char* strKey = luaL_checkstring(luaState, -2);
+			}
 			const char* strValue = luaL_checkstring(luaState, -1);
 			lua_pop(luaState, 1);
 		}
