@@ -21,7 +21,14 @@ function Main()
 	
 	local xmlObj = XLGetObject("Sticker.Helper.Xml")
 	local xmlTable = {}
-	xmlTable.a = {["a2"] = 11, ["b2"] = 22}
+	xmlTable.a = {}
+	xmlTable.a.aa = 135213341
+	xmlTable.a.bb = {}
+	xmlTable.a.bb.aaa = "aaaaaa"
+	xmlTable.a.bb.bbb = "bbbbbb"
+	xmlTable.b = {}
+	xmlTable.b.aa = "afsdfaf"
+	xmlTable.b.bb = 2344234
 	local dataTable = xmlObj:SetXml([[C:\Users\Winter\Desktop\135213341.xml]], xmlTable)
 	
 	return true
