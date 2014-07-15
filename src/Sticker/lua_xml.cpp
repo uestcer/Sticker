@@ -1,6 +1,7 @@
 #include "lua_xml.h"
 #include <string>
 #include <map>
+#include <sstream>
 
 static XLLRTGlobalAPI LuaXmlFunctions[] = {
 	{"GetXml", LuaXML::GetXml},
@@ -126,9 +127,61 @@ bool LuaXML::ConvertXmlElemToLuaTable( tinyxml2::XMLElement *pElem, lua_State* l
 	return true;
 }
 
-bool LuaXML::ConvertLuaTableToXmlElem( tinyxml2::XMLElement *pElem, lua_State* luaState )
+bool LuaXML::ConvertLuaTableToXmlElem( tinyxml2::XMLNode *pElem, lua_State* luaState )
 {
-	return true;
+	bool bRet = true;
+	int nTopIndex = lua_gettop(luaState);
+	lua_pushnil(luaState);
+	while(0 != lua_next(luaState, nTopIndex))
+	{
+		// key 必须是 string 或者 number
+		int nKeyType = lua_type(luaState, -2);
+		int nValueType = lua_type(luaState, -1);
+		if (nKeyType == LUA_TSTRING)
+		{
+			std::string strKey = luaL_checkstring(luaState, -2);
+			std::string strValue;
+			if (nValueType == LUA_TSTRING)
+			{
+				strValue = lua_tostring(luaState, -1);
+			}
+			else if (nValueType == LUA_TNUMBER)
+			{
+				__int64 nValue = lua_tointeger(luaState, -1);
+			}
+			else if (nValueType == LUA_TBOOLEAN)
+			{
+				int nValue = lua_toboolean(luaState, -1);
+				if (nValue == 1)
+				{
+					strValue = "true";
+				}
+				else
+				{
+					strValue = "false";
+				}
+			}
+			else if (nValueType == LUA_TTABLE)
+			{
+
+			}
+		}
+		else if (nKeyType == LUA_TNUMBER)
+		{
+			if (nValueType != LUA_TTABLE)
+			{
+				bRet = false;
+				break;
+			}
+		}
+		else
+		{
+			bRet = false;
+			break;
+		}
+		lua_pop(luaState, 1);
+	}
+	return bRet;
 }
 
 int LuaXML::GetXml( lua_State* luaState )
@@ -181,25 +234,34 @@ int LuaXML::SetXml( lua_State* luaState )
 		{
 			break;
 		}
+		// 第三个参数必须是 table
 		if (lua_gettop(luaState) != 3 || lua_istable(luaState, -1) != 1)
 		{
 			break;
 		}
-		int nIndex = lua_gettop(luaState);
+		int nTopIndex = lua_gettop(luaState);
+		// table 只能有一个根节点
+		unsigned int nRootElemCount = 0;
 		lua_pushnil(luaState);
-		while(0 != lua_next(luaState, nIndex))
+		while(0 != lua_next(luaState, nTopIndex))
 		{
-			const char* strKey = luaL_checkstring(luaState, -2);
-			const char* strValue = luaL_checkstring(luaState, -1);
+			nRootElemCount ++;
 			lua_pop(luaState, 1);
 		}
+		if (nRootElemCount != 1)
+		{
+			break;
+		}
+		
 		pDoc->Clear();
-		tinyxml2::XMLElement* pElem = pDoc->NewElement("data");
-		pElem->SetName("data");
-		pElem->SetText("hello xml");
-		pDoc->LinkEndChild(pElem);
+		if (!ConvertLuaTableToXmlElem(pDoc, luaState))
+		{
+			pDoc->Clear();
+			break;
+		}
 		pDoc->SaveFile(strPath);
-
+		lua_pushboolean(luaState, 1);
+		bRet = 1;
 	} while (false);
 	return bRet;
 }
