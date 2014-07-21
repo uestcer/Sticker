@@ -21,9 +21,18 @@ function Main()
 	
 	local xmlObj = XLGetObject("Sticker.Helper.Xml")
 	local xmlTable = {}
-	xmlTable.a = 1
-	xmlTable.b = {["a2"] = 11, ["b2"] = 22}
-	local dataTable = xmlObj:SetXml([[C:\Users\Winter\Desktop\135213341.xml]], xmlTable)
+	xmlTable["data"] = {}
+	xmlTable["data"]["item1"] = "haha"
+	xmlTable["data"]["item2"] = {}
+	xmlTable["data"]["item2"]["item21"] = "1"
+	xmlTable["data"]["item2"]["item22"] = "hahahahahahahaha"
+	local item = {}
+	item["item"] = {["arritem1"] = "hahahaha", ["arritem2"] = "asljdfk", ["arritem3"] = "fadsfasdfas"}
+	table.insert(xmlTable["data"], item)
+	local item = {}
+	item["item"] = {["arritem1"] = "2hahahaha", ["arritem2"] = "2asljdfk", ["arritem3"] = "2fadsfasdfas"}
+	table.insert(xmlTable["data"], item)
+	local dataTable = xmlObj:SetXml([[C:\Users\Dongyu\Desktop\135213341.xml]], xmlTable)
 	
 	return true
 end

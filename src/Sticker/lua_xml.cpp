@@ -126,8 +126,71 @@ bool LuaXML::ConvertXmlElemToLuaTable( tinyxml2::XMLElement *pElem, lua_State* l
 	return true;
 }
 
-bool LuaXML::ConvertLuaTableToXmlElem( tinyxml2::XMLElement *pElem, lua_State* luaState )
+bool LuaXML::ConvertLuaTableToXmlElem(tinyxml2::XMLDocument* pDoc, tinyxml2::XMLElement* pElem, lua_State* luaState )
 {
+	int nIndex = lua_gettop(luaState);
+	int nDataType = lua_type(luaState, nIndex);
+	if (nDataType != LUA_TSTRING && nDataType != LUA_TTABLE)
+	{
+		return false;
+	}
+
+	if (nDataType == LUA_TSTRING)
+	{
+		const char* strData = luaL_checkstring(luaState, nIndex);
+		pElem->SetText(strData);
+	}
+	else if (nDataType == LUA_TTABLE)
+	{
+		lua_pushnil(luaState);
+		while (0 != lua_next(luaState, nIndex))
+		{
+			int nKeyType = lua_type(luaState, -2);
+			int nValueType = lua_type(luaState, -1);
+			if (nKeyType != LUA_TSTRING && nKeyType != LUA_TNUMBER)
+			{
+				break;
+			}
+			else if (nValueType != LUA_TSTRING && nValueType != LUA_TTABLE)
+			{
+				break;
+			}
+
+			if (nKeyType == LUA_TSTRING)
+			{
+				const char* strKey = luaL_checkstring(luaState, -2);
+				tinyxml2::XMLElement* pChildElem = pDoc->NewElement(strKey);
+				ConvertLuaTableToXmlElem(pDoc, pChildElem, luaState);
+				pElem->LinkEndChild(pChildElem);
+			}
+			else if (nKeyType == LUA_TNUMBER)
+			{
+				// 如果是用 key 是 number 类型，那么 value 必须是 table，把 table 的第一个 item 当作 value 来处理
+				if (nValueType != LUA_TTABLE)
+				{
+					break;
+				}
+				int nValueIndex = lua_gettop(luaState);
+				lua_pushnil(luaState);
+				if (0 != lua_next(luaState, nValueIndex))
+				{
+					if (lua_type(luaState, -2) != LUA_TSTRING)
+					{
+						break;
+					}
+					const char* strKey = luaL_checkstring(luaState, -2);
+					tinyxml2::XMLElement* pChildElem = pDoc->NewElement(strKey);
+					ConvertLuaTableToXmlElem(pDoc, pChildElem, luaState);
+					pElem->LinkEndChild(pChildElem);
+					lua_pop(luaState, 1);
+				}
+				lua_settable(luaState, nValueIndex);
+			}
+
+			lua_pop(luaState, 1);
+		}
+		lua_settop(luaState, nIndex);
+	}
 	return true;
 }
 
@@ -186,31 +249,31 @@ int LuaXML::SetXml( lua_State* luaState )
 		{
 			break;
 		}
+		// 获取 table 的第一个 item，xml 根节点由第一个 item 决定
 		int nIndex = lua_gettop(luaState);
 		lua_pushnil(luaState);
-		while(0 != lua_next(luaState, nIndex))
+		if (0 != lua_next(luaState, nIndex))
 		{
 			int nKeyType = lua_type(luaState, -2);
 			int nValueType = lua_type(luaState, -1);
-			if (nKeyType == LUA_TNUMBER)
+			if (nKeyType != LUA_TSTRING)
 			{
-				int nKey = luaL_checkint(luaState, -2);
-				nKey ++;
+				break;
 			}
-			else if (nKeyType == LUA_TSTRING)
+			if (nValueType != LUA_TSTRING && nValueType != LUA_TTABLE)
 			{
-				const char* strKey = luaL_checkstring(luaState, -2);
+				break;
 			}
-			const char* strValue = luaL_checkstring(luaState, -1);
-			lua_pop(luaState, 1);
+			const char* strKey = luaL_checkstring(luaState, -2);
+			
+			pDoc->Clear();
+			tinyxml2::XMLElement* pElem = pDoc->NewElement(strKey);
+			ConvertLuaTableToXmlElem(pDoc, pElem, luaState);
+			pDoc->LinkEndChild(pElem);
+			pDoc->SaveFile(strPath);
+			
+			lua_pop(luaState, 2);
 		}
-		pDoc->Clear();
-		tinyxml2::XMLElement* pElem = pDoc->NewElement("data");
-		pElem->SetName("data");
-		pElem->SetText("hello xml");
-		pDoc->LinkEndChild(pElem);
-		pDoc->SaveFile(strPath);
-
 	} while (false);
 	return bRet;
 }

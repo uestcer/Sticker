@@ -28,8 +28,8 @@ public:
 private:
 	// 使用 xmlElem 中的内容构造 lua table ，将结果放到栈顶
 	static bool ConvertXmlElemToLuaTable(tinyxml2::XMLElement *pElem, lua_State* luaState);
-	// 使用存放在栈顶中的 lua table 构造 xmlElem，将结果存放为 pElem 的 child
-	static bool ConvertLuaTableToXmlElem(tinyxml2::XMLElement *pElem, lua_State* luaState);
+	// 把 table 中的内容添加为 XmlElement 的子节点
+	static bool ConvertLuaTableToXmlElem(tinyxml2::XMLDocument* pDoc, tinyxml2::XMLElement *pElem, lua_State* luaState);
 };
 
 #endif
