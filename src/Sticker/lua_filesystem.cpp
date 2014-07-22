@@ -383,7 +383,7 @@ int LuaFileSystem::GetUpperDir( lua_State* luaState )
 	std::wstring wstrPath;
 	TransCode::UTF8_to_Unicode(strPath, strlen(strPath), wstrPath);
 
-	std::wstring wstrUpperDir = pFileSystem->GetFileMainName(wstrPath);
+	std::wstring wstrUpperDir = pFileSystem->GetUpperDir(wstrPath);
 	std::string strUpperDir;
 	TransCode::Unicode_to_UTF8(wstrUpperDir.c_str(), wstrUpperDir.length(), strUpperDir);
 	if (!strUpperDir.empty())
@@ -403,7 +403,7 @@ int LuaFileSystem::PathCombine( lua_State* luaState )
 	std::wstring wstrName;
 	TransCode::UTF8_to_Unicode(strDir, strlen(strDir), wstrDir);
 	TransCode::UTF8_to_Unicode(strName, strlen(strName), wstrName);
-
+	
 	std::wstring wstrPath = pFileSystem->CombinePath(wstrDir, wstrName);
 	if (!wstrPath.empty())
 	{

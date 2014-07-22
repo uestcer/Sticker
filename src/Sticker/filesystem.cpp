@@ -264,21 +264,25 @@ std::wstring FileSystem::GetFileMainName( std::wstring path )
 
 std::wstring FileSystem::GetUpperDir( std::wstring path )
 {
-	WCHAR strPath[MAX_PATH] = {0};
-	StrCpy(strPath, path.c_str());
-	BOOL bRet = PathAppend(strPath, L"..");
-	if (bRet)
-	{
-		return strPath;
-	}
-	else
-	{
-		return L"";
-	}
+	return CombinePath(path, L"..");
 }
 
 std::wstring FileSystem::CombinePath( std::wstring dir, std::wstring name )
 {
+	for (std::wstring::iterator iter = dir.begin(); iter != dir.end(); ++iter)
+	{
+		if (*iter == '/')
+		{
+			*iter = '\\';
+		}
+	}
+	for (std::wstring::iterator iter = name.begin(); iter != name.end(); ++iter)
+	{
+		if (*iter == '/')
+		{
+			*iter = '\\';
+		}
+	}
 	WCHAR strPath[MAX_PATH] = {0};
 	WCHAR* pRet = ::PathCombine(strPath, dir.c_str(), name.c_str());
 	if (pRet)

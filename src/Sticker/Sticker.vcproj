@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="XLUE.lib shlwapi.lib shell32.lib"
+				AdditionalDependencies="XLUE.lib shlwapi.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(SolutionDir)..\3rd\lib\$(ConfigurationName)&quot;"
 				GenerateDebugInformation="true"
