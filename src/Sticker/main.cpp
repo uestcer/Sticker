@@ -16,6 +16,7 @@
 
 #include "lua_filesystem.h"
 #include "lua_xml.h"
+#include "notifyicon.h"
 
 bool InitXLUE();
 void UninitXLUE();
@@ -26,6 +27,9 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 					   LPTSTR    lpCmdLine,
 					   int       nCmdShow)
 {
+	NotifyIcon notifyIcon;
+	notifyIcon.Init();
+
 	if(!InitXLUE())
 	{
 		MessageBoxW(NULL,L"≥ı ºªØXLUE  ß∞‹!",L"¥ÌŒÛ",MB_OK);

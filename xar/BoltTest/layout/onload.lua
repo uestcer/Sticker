@@ -34,7 +34,6 @@ function Main()
 	table.insert(xmlTable["data"], item)
 	xmlObj:SetXml([[C:\Users\Dongyu\Desktop\135213341.xml]], xmlTable)
 	local dataTable = xmlObj:GetXml([[C:\Users\Dongyu\Desktop\135213341.xml]])
-	print_lua_table(dataTable)
 	
 	return true
 end

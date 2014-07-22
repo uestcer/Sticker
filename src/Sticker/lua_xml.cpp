@@ -102,26 +102,26 @@ bool LuaXML::ConvertXmlElemToLuaTable( tinyxml2::XMLElement *pElem, lua_State* l
 	}
 	else
 	{
-	}
 
-	lua_newtable(luaState);
-	tinyxml2::XMLElement* iterElem = pElem->FirstChildElement();
-	while(iterElem)
-	{
-		const char* strName = iterElem->Name();
-		const char* strText = iterElem->GetText();
-		if (strText)
+		lua_newtable(luaState);
+		tinyxml2::XMLElement* iterElem = pElem->FirstChildElement();
+		while(iterElem)
 		{
-			lua_pushstring(luaState, strName);
-			lua_pushstring(luaState, strText);
+			const char* strName = iterElem->Name();
+			const char* strText = iterElem->GetText();
+			if (strText)
+			{
+				lua_pushstring(luaState, strName);
+				lua_pushstring(luaState, strText);
+			}
+			else
+			{
+				lua_pushstring(luaState, strName);
+				ConvertXmlElemToLuaTable(iterElem, luaState);
+			}
+			lua_settable(luaState, -3);
+			iterElem = iterElem->NextSiblingElement();
 		}
-		else
-		{
-			lua_pushstring(luaState, strName);
-			ConvertXmlElemToLuaTable(iterElem, luaState);
-		}
-		lua_settable(luaState, -3);
-		iterElem = iterElem->NextSiblingElement();
 	}
 	return true;
 }
