@@ -9,9 +9,9 @@ typedef VOID (*NotifyIconCallback) (UINT uID, UINT message);
 class NotifyIcon
 {
 public:
-	static UINT AddIcon(HICON hIcon, WCHAR* szTip);
+	static UINT AddIcon(HICON hIcon, const WCHAR* szTip);
 	static VOID DelIcon(UINT uID);
-	static VOID ModIcon(UINT uID, HICON hIcon, WCHAR* szTip);
+	static VOID ModIcon(UINT uID, HICON hIcon, const WCHAR* szTip);
 	static UINT Attach(NotifyIconCallback pCallback);
 	static VOID Detach(UINT uCookie);
 

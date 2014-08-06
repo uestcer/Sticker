@@ -6,7 +6,7 @@ std::map<UINT,NotifyIconCallback> NotifyIcon::m_mapCallback;
 UINT NotifyIcon::m_uIDCount = 1;
 std::map<UINT,NOTIFYICONDATA> NotifyIcon::m_mapNotifyData;
 
-UINT NotifyIcon::AddIcon( HICON hIcon, WCHAR* szTip )
+UINT NotifyIcon::AddIcon( HICON hIcon, const WCHAR* szTip )
 {
 	// ´´½¨´°¿Ú
 	LPCTSTR pszClassName = TEXT("NotifyIcon_ClassName");
@@ -83,7 +83,7 @@ VOID NotifyIcon::DelIcon( UINT uID )
 	}
 }
 
-VOID NotifyIcon::ModIcon( UINT uID, HICON hIcon, WCHAR* szTip )
+VOID NotifyIcon::ModIcon( UINT uID, HICON hIcon, const WCHAR* szTip )
 {
 	if (m_hWnd == NULL)
 	{

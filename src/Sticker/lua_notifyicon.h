@@ -5,7 +5,7 @@
 #include <XLUE.h>
 #include <XLGraphic.h>
 #include <XLLuaRuntime.h>
-#include <map>
+#include <vector>
 
 #define XLUE_LUANOTIFYICON_CLASSNAME "Sticker.Helper.NotifyIcon.Class"
 #define XLUE_LUANOTIFYICON_OBJNAME "Sticker.Helper.NotifyIcon"
@@ -27,7 +27,9 @@ private:
 	static VOID NotifyIconCallbackFunc(UINT uID, UINT message);
 
 private:
-	static std::map<UINT, UINT> m_mapCallback;    // NotifyIcon:Attach 时返回的 cookie, LuaNotifyIcon:Attach 时回调函数的 ref
+	static lua_State* m_pLuaState;
+	static UINT m_callbackCookie;
+	static std::vector<int> m_vecCallback;    // LuaNotifyIcon:Attach 时回调函数的 ref
 };
 
 #endif

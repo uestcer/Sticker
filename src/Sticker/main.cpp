@@ -16,7 +16,7 @@
 
 #include "lua_filesystem.h"
 #include "lua_xml.h"
-#include "notifyicon.h"
+#include "lua_notifyicon.h"
 
 bool InitXLUE();
 void UninitXLUE();
@@ -98,6 +98,7 @@ bool InitXLUE()
 	XL_LRT_ENV_HANDLE hEnv = XLLRT_GetEnv(NULL);
 	LuaFileSystem::RegisterObject(hEnv);
 	LuaXML::RegisterObject(hEnv);
+	LuaNotifyIcon::RegisterObject(hEnv);
 	XLLRT_ReleaseEnv(hEnv);
 
 	return true; 
