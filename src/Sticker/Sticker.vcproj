@@ -244,6 +244,14 @@
 				Name="notifyicon"
 				>
 				<File
+					RelativePath=".\lua_notifyicon.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\lua_notifyicon.h"
+					>
+				</File>
+				<File
 					RelativePath=".\notifyicon.cpp"
 					>
 				</File>

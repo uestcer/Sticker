@@ -1,9 +1,9 @@
 #include "notifyicon.h"
 
 HWND NotifyIcon::m_hWnd = NULL;
-UINT NotifyIcon::m_uCookieCount = 0;
+UINT NotifyIcon::m_uCookieCount = 1;
 std::map<UINT,NotifyIconCallback> NotifyIcon::m_mapCallback;
-UINT NotifyIcon::m_uIDCount = 0;
+UINT NotifyIcon::m_uIDCount = 1;
 std::map<UINT,NOTIFYICONDATA> NotifyIcon::m_mapNotifyData;
 
 UINT NotifyIcon::AddIcon( HICON hIcon, WCHAR* szTip )
@@ -92,7 +92,10 @@ VOID NotifyIcon::ModIcon( UINT uID, HICON hIcon, WCHAR* szTip )
 	std::map<UINT, NOTIFYICONDATA>::iterator iter = m_mapNotifyData.find(uID);
 	if (iter != m_mapNotifyData.end())
 	{
-		iter->second.hIcon = hIcon;
+		if (hIcon != NULL)
+		{
+			iter->second.hIcon = hIcon;
+		}
 		if (szTip && lstrlen(szTip) < 127)
 		{
 			lstrcpy(iter->second.szTip, szTip);
