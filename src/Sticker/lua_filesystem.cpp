@@ -23,6 +23,8 @@ static XLLRTGlobalAPI LuaFileSystemFunctions[] = {
 	{"GetFileMainName", LuaFileSystem::GetFileMainName},
 	{"GetUpperDir", LuaFileSystem::GetUpperDir},
 	{"PathCombine", LuaFileSystem::PathCombine},
+	{"ReadFile", LuaFileSystem::ReadFile},
+	{"WriteFile", LuaFileSystem::WriteFile},
 	{NULL,NULL}
 };
 
@@ -411,6 +413,56 @@ int LuaFileSystem::PathCombine( lua_State* luaState )
 		TransCode::Unicode_to_UTF8(wstrPath.c_str(), wstrPath.length(), strPath);
 		lua_pushstring(luaState, strPath.c_str());
 		return 1;
+	}
+	return 0;
+}
+
+int LuaFileSystem::ReadFile( lua_State* luaState )
+{
+	if (!lua_isstring(luaState, 2))
+	{
+		return 0;
+	}
+	const char* strPath = luaL_checkstring(luaState, 2);
+	std::wstring wstrPath;
+	TransCode::UTF8_to_Unicode(strPath, strlen(strPath), wstrPath);
+	HANDLE hFile = ::CreateFile(wstrPath.c_str(), GENERIC_READ, 0, NULL, OPEN_EXISTING, NULL, NULL);
+	if (hFile != INVALID_HANDLE_VALUE)
+	{
+		DWORD nFileSize = ::GetFileSize(hFile, NULL);
+		char* lpBuffer = new char[nFileSize];
+		DWORD nNumberOfBytesRead;
+		BOOL bRet = ::ReadFile(hFile, lpBuffer, nFileSize, &nNumberOfBytesRead, NULL);
+
+		lua_pushlstring(luaState, lpBuffer, nNumberOfBytesRead);
+		delete[] lpBuffer;
+		CloseHandle(hFile);
+		return 1;
+	}
+	return 0;
+}
+
+int LuaFileSystem::WriteFile( lua_State* luaState )
+{
+	if (!lua_isstring(luaState, 2) || !lua_isstring(luaState, 3))
+	{
+		return 0;
+	}
+	const char* strPath = luaL_checkstring(luaState, 2);
+	const char* strContent = luaL_checkstring(luaState, 3);
+	int nContentSize = strlen(strContent);
+	if (lua_isnumber(luaState, 4))
+	{
+		nContentSize = luaL_checkint(luaState, 4);
+	}
+	std::wstring wstrPath;
+	TransCode::UTF8_to_Unicode(strPath, strlen(strPath), wstrPath);
+	HANDLE hFile = ::CreateFile(wstrPath.c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, NULL, NULL);
+	if (hFile != INVALID_HANDLE_VALUE)
+	{
+		DWORD nNumberOfBytesWritten;
+		::WriteFile(hFile, strContent, nContentSize, &nNumberOfBytesWritten, NULL);
+		CloseHandle(hFile);
 	}
 	return 0;
 }

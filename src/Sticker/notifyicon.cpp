@@ -1,34 +1,20 @@
 #include "notifyicon.h"
 
-NotifyIcon::NotifyIcon()
+HWND NotifyIcon::m_hWnd = NULL;
+UINT NotifyIcon::m_uCookieCount = 0;
+std::map<UINT,NotifyIconCallback> NotifyIcon::m_mapCallback;
+UINT NotifyIcon::m_uIDCount = 0;
+std::map<UINT,NOTIFYICONDATA> NotifyIcon::m_mapNotifyData;
+
+UINT NotifyIcon::AddIcon( HICON hIcon, WCHAR* szTip )
 {
-	m_hWnd = NULL;
-	m_pNotifyIconData = NULL;
-}
-
-INotifyIconCallback* NotifyIcon::m_pCallBack = NULL;
-
-NotifyIcon::~NotifyIcon()
-{
-	if (m_hWnd)
+	// ´´½¨´°¿Ú
+	LPCTSTR pszClassName = TEXT("NotifyIcon_ClassName");
+	LPCTSTR pszWndName = TEXT("NotifyIcon_WndName");
+	HINSTANCE hInstance = GetModuleHandle(NULL);
+	WNDCLASS wndClass;
+	if (GetClassInfo(hInstance, pszClassName, &wndClass) == 0)
 	{
-		::DestroyWindow(m_hWnd);
-	}
-	if (m_pNotifyIconData)
-	{
-		delete m_pNotifyIconData;
-	}
-}
-
-void NotifyIcon::AddIcon( HICON hIcon, PCTSTR pszTipsText )
-{
-	if (m_hWnd == NULL)
-	{
-		LPCTSTR pszClassName = TEXT("Sticker_NotifyIcon_ClassName");
-		LPCTSTR pszWndName = TEXT("Sticker_NotifyIcon_WndName");
-
-		HINSTANCE hInstance = GetModuleHandle(NULL);
-		WNDCLASS wndClass;
 		wndClass.style = CS_HREDRAW | CS_VREDRAW;
 		wndClass.lpfnWndProc = NotifyIcon::WndProc;
 		wndClass.cbClsExtra = 0;
@@ -39,10 +25,13 @@ void NotifyIcon::AddIcon( HICON hIcon, PCTSTR pszTipsText )
 		wndClass.hbrBackground = NULL;
 		wndClass.lpszClassName = pszClassName;
 		wndClass.lpszMenuName = NULL;
-		if (!RegisterClass(&wndClass))
+		if (RegisterClass(&wndClass) == NULL)
 		{
-			return;
+			return NULL;
 		}
+	}
+	if (FindWindow(pszClassName, pszWndName) == NULL)
+	{
 		m_hWnd = CreateWindowEx(WS_EX_TOOLWINDOW,
 			pszClassName, pszWndName, 
 			WS_POPUP,
@@ -51,82 +40,109 @@ void NotifyIcon::AddIcon( HICON hIcon, PCTSTR pszTipsText )
 			CW_USEDEFAULT,
 			CW_USEDEFAULT,
 			NULL, NULL, hInstance, NULL);
+		if (m_hWnd == NULL)
+		{
+			return NULL;
+		}
 	}
 
-	if (m_hWnd == NULL || hIcon == NULL)
+	UINT uID = m_uIDCount;
+	m_uIDCount++;
+
+	NOTIFYICONDATA nd;
+	nd.cbSize = sizeof(nd);
+	nd.hWnd = m_hWnd;
+	nd.uID = uID;
+	nd.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
+	nd.uCallbackMessage = WM_USER;
+	nd.hIcon = hIcon;
+	if (szTip != NULL && lstrlen(szTip) < 127)
+	{
+		lstrcpy(nd.szTip, szTip);
+	}
+	if(Shell_NotifyIcon(NIM_ADD, &nd) == TRUE)
+	{
+		m_mapNotifyData.insert(std::make_pair(uID, nd));
+		return uID;
+	}
+
+	return NULL;
+}
+
+VOID NotifyIcon::DelIcon( UINT uID )
+{
+	if (m_hWnd == NULL)
 	{
 		return;
 	}
-	
-	if (m_pNotifyIconData == NULL)
+	std::map<UINT, NOTIFYICONDATA>::iterator iter = m_mapNotifyData.find(uID);
+	if (iter != m_mapNotifyData.end())
 	{
-		m_pNotifyIconData = new NOTIFYICONDATA;
-		ZeroMemory(m_pNotifyIconData, sizeof(NOTIFYICONDATA));
-	}
-	m_pNotifyIconData->hWnd = m_hWnd;
-	m_pNotifyIconData->uID = 0;
-	m_pNotifyIconData->uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
-	m_pNotifyIconData->uCallbackMessage = WM_USER;
-	m_pNotifyIconData->hIcon = hIcon;
-	if (pszTipsText != NULL)
-	{
-		lstrcpy(m_pNotifyIconData->szTip, pszTipsText);
-	}
-	Shell_NotifyIcon(NIM_ADD, m_pNotifyIconData);
-}
-
-void NotifyIcon::DelIcon()
-{
-	if (m_pNotifyIconData)
-	{
-		Shell_NotifyIcon(NIM_DELETE, m_pNotifyIconData);
-		m_pNotifyIconData = NULL;
+		Shell_NotifyIcon(NIM_DELETE, &(iter->second));
+		m_mapNotifyData.erase(iter);
 	}
 }
 
-void NotifyIcon::SetIcon( HICON hIcon, PCTSTR pszTipsText )
+VOID NotifyIcon::ModIcon( UINT uID, HICON hIcon, WCHAR* szTip )
 {
-	DelIcon();
-	AddIcon(hIcon, pszTipsText);
+	if (m_hWnd == NULL)
+	{
+		return;
+	}
+	std::map<UINT, NOTIFYICONDATA>::iterator iter = m_mapNotifyData.find(uID);
+	if (iter != m_mapNotifyData.end())
+	{
+		iter->second.hIcon = hIcon;
+		if (szTip && lstrlen(szTip) < 127)
+		{
+			lstrcpy(iter->second.szTip, szTip);
+		}
+		else
+		{
+			lstrcpy(iter->second.szTip, L"");
+		}
+		Shell_NotifyIcon(NIM_MODIFY, &(iter->second));
+	}
 }
 
-void NotifyIcon::Attach( INotifyIconCallback* pCallback )
+UINT NotifyIcon::Attach( NotifyIconCallback pCallback )
 {
-	m_pCallBack = pCallback;
+	if (pCallback == NULL)
+	{
+		return NULL;
+	}
+	UINT uCookie = m_uCookieCount;
+	m_uCookieCount ++;
+
+	m_mapCallback.insert(std::make_pair(uCookie, pCallback));
+	return uCookie;
 }
 
-void NotifyIcon::Detach()
+VOID NotifyIcon::Detach( UINT uCookie )
 {
-	m_pCallBack = NULL;
+	std::map<UINT, NotifyIconCallback>::iterator iter = m_mapCallback.find(uCookie);
+	if (iter != m_mapCallback.end())
+	{
+		m_mapCallback.erase(iter);
+	}
 }
 
 LRESULT CALLBACK NotifyIcon::WndProc( HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam )
 {
-	UINT WM_TASKBARCREATED;
-	WM_TASKBARCREATED = RegisterWindowMessage(TEXT("TaskbarCreated"));
-
 	switch(message)
 	{
 	case WM_CREATE:
 		break;
-	case WM_USER:
-		if (lParam == WM_LBUTTONDOWN || lParam == WM_LBUTTONUP || lParam == WM_LBUTTONDBLCLK ||
-			lParam == WM_RBUTTONDOWN || lParam == WM_RBUTTONUP || lParam == WM_RBUTTONDBLCLK)
-		{
-			if (m_pCallBack)
-			{
-				m_pCallBack->OnNotifyIcon((UINT)lParam);
-			}
-		}
-		break;
 	case WM_DESTROY:
-
+		break;
+	case WM_USER:
+		for (std::map<UINT, NotifyIconCallback>::iterator iter = m_mapCallback.begin(); iter != m_mapCallback.end(); ++iter)
+		{
+			NotifyIconCallback pCallback = iter->second;
+			pCallback(wParam, lParam);        // wParam --> uID, lParam --> message
+		}
 		break;
 	default:
-		if (message == WM_TASKBARCREATED)
-		{
-			::SendMessage(hwnd, message, wParam, lParam);
-		}
 		break;
 	}
 	return DefWindowProc(hwnd, message, wParam, lParam);

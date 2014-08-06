@@ -22,30 +22,11 @@ bool InitXLUE();
 void UninitXLUE();
 bool LoadXAR();
 
-class NofityIconCallback : public INotifyIconCallback
-{
-public:
-	void OnNotifyIcon(UINT uMsg)
-	{
-		if (uMsg == WM_LBUTTONUP)
-		{
-			MessageBox(NULL, L"hahaha", L"fasf", MB_OK);
-		}
-	}
-};
-
-
 int APIENTRY _tWinMain(HINSTANCE hInstance,
 					   HINSTANCE hPrevInstance,
 					   LPTSTR    lpCmdLine,
 					   int       nCmdShow)
 {
-	NotifyIcon notifyIcon;
-	HICON hIcon = LoadIcon(NULL, IDI_APPLICATION);
-	notifyIcon.AddIcon(hIcon, L"xxxxx");
-	NofityIconCallback callback;
-	notifyIcon.Attach(&callback);
-
 	if(!InitXLUE())
 	{
 		MessageBoxW(NULL,L"≥ı ºªØXLUE  ß∞‹!",L"¥ÌŒÛ",MB_OK);

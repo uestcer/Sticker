@@ -19,34 +19,6 @@ function Main()
 	frameHostWnd:BindUIObjectTree(objtree)
 	frameHostWnd:Create()
 	
-	-- local xmlObj = XLGetObject("Sticker.Helper.Xml")
-	-- local xmlTable = {}
-	-- xmlTable["data"] = {}
-	-- xmlTable["data"]["item1"] = "haha"
-	-- xmlTable["data"]["item2"] = {}
-	-- xmlTable["data"]["item2"]["item21"] = "1"
-	-- xmlTable["data"]["item2"]["item22"] = "hahahahahahahaha"
-	-- local item = {}
-	-- item["item"] = {["arritem1"] = "hahahaha", ["arritem2"] = "asljdfk", ["arritem3"] = "fadsfasdfas"}
-	-- table.insert(xmlTable["data"], item)
-	-- local item = {}
-	-- item["item"] = {["arritem1"] = "2hahahaha", ["arritem2"] = "2asljdfk", ["arritem3"] = "2fadsfasdfas"}
-	-- table.insert(xmlTable["data"], item)
-	-- xmlObj:SetXml([[C:\Users\Dongyu\Desktop\135213341.xml]], xmlTable)
-	-- local dataTable = xmlObj:GetXml([[C:\Users\Dongyu\Desktop\135213341.xml]])
-	
-	local filesystem = XLGetObject("Sticker.Helper.FileSystem")
-	local path = filesystem:PathCombine(__document, [[..\..\res\default\common\Common.Bkg.Stripe.png]])
-	XLPrint("[Dongyuxxx] path = " .. tostring(path))
-	if path then	
-		local factory = XLGetObject("Xunlei.XLGraphic.Factory.Object")
-		local bitmap = factory:CreateBitmap(path, "ARGB32")
-		XLPrint("[Dongyuxxx] bitmap = " .. tostring(bitmap))
-		if bitmap then
-			local rgb, width, height, length = bitmap:GetInfo()
-			XLPrint("[Dongyuxxx] rgb = " .. tostring(rgb) .. ",width = " .. tostring(width) .. ",height = " .. tostring(height) .. ",length = " .. tostring(length))
-		end
-	end
 	
 	return true
 end

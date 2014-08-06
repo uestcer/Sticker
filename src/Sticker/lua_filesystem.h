@@ -43,6 +43,8 @@ public:
 	static int GetFileMainName(lua_State* luaState);
 	static int GetUpperDir(lua_State* luaState);
 	static int PathCombine(lua_State* luaState);
+	static int ReadFile(lua_State* luaState);
+	static int WriteFile(lua_State* luaState);
 
 };
 

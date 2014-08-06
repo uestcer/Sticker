@@ -1,35 +1,29 @@
 #ifndef _NOTIFYICON_H_
 #define _NOTIFYICON_H_
-
-#include <Windows.h>
+#include <windows.h>
 #include <shellapi.h>
+#include <map>
 
-class INotifyIconCallback
-{
-public:
-	virtual void OnNotifyIcon(UINT uMsg)=0;
-};
+typedef VOID (*NotifyIconCallback) (UINT uID, UINT message);
 
 class NotifyIcon
 {
 public:
-	NotifyIcon();
-	~NotifyIcon();
-
-	void AddIcon(HICON hIcon, PCTSTR pszTipsText);
-	void DelIcon();
-	void SetIcon(HICON hIcon, PCTSTR pszTipsText);
-
-	void Attach(INotifyIconCallback* pCallback);
-	void Detach();
+	static UINT AddIcon(HICON hIcon, WCHAR* szTip);
+	static VOID DelIcon(UINT uID);
+	static VOID ModIcon(UINT uID, HICON hIcon, WCHAR* szTip);
+	static UINT Attach(NotifyIconCallback pCallback);
+	static VOID Detach(UINT uCookie);
 
 private:
 	static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 private:
-	HWND m_hWnd;
-	NOTIFYICONDATA* m_pNotifyIconData;
-	static INotifyIconCallback* m_pCallBack;
+	static HWND m_hWnd;
+	static UINT m_uCookieCount;
+	static std::map<UINT,NotifyIconCallback> m_mapCallback;
+	static UINT m_uIDCount;
+	static std::map<UINT,NOTIFYICONDATA> m_mapNotifyData;
 };
 
 #endif
