@@ -12,6 +12,8 @@ static XLLRTGlobalAPI LuaNotifyIconFunctions[] = {
 	{NULL,NULL}
 };
 
+std::map<UINT, UINT> LuaNotifyIcon::m_mapCallback;
+
 long LuaNotifyIcon::RegisterObject( XL_LRT_ENV_HANDLE hEnv )
 {
 	if(hEnv == NULL)
@@ -101,10 +103,22 @@ int LuaNotifyIcon::ModIcon( lua_State* luaState )
 
 int LuaNotifyIcon::Attach( lua_State* luaState )
 {
+	if (lua_isfunction(luaState, 2) != 1)
+	{
+		return 0;
+	}
+	lua_settop(luaState, 2);
+	int nRef = luaL_ref(luaState, LUA_REGISTRYINDEX);
+
 	return 0;
 }
 
 int LuaNotifyIcon::Detach( lua_State* luaState )
 {
 	return 0;
+}
+
+VOID LuaNotifyIcon::NotifyIconCallbackFunc( UINT uID, UINT message )
+{
+
 }
