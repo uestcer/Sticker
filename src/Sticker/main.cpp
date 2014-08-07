@@ -5,6 +5,7 @@
 #include "lua_xml.h"
 #include "lua_notifyicon.h"
 #include "lua_stickercore.h"
+#include "lua_osshell.h"
 
 bool InitXLUE();
 void UninitXLUE();
@@ -88,6 +89,7 @@ bool InitXLUE()
 	LuaXML::RegisterObject(hEnv);
 	LuaNotifyIcon::RegisterObject(hEnv);
 	LuaStickerCore::RegisterObject(hEnv);
+	LuaOSShell::RegisterObject(hEnv);
 	XLLRT_ReleaseEnv(hEnv);
 
 	return true; 

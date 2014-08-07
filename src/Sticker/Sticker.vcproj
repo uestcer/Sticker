@@ -239,6 +239,22 @@
 			<Filter
 				Name="osshell"
 				>
+				<File
+					RelativePath=".\lua_osshell.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\lua_osshell.h"
+					>
+				</File>
+				<File
+					RelativePath=".\osshell.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\osshell.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="transcode"
