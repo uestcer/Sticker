@@ -61,6 +61,10 @@ UINT NotifyIcon::AddIcon( HICON hIcon, const WCHAR* szTip )
 	{
 		lstrcpy(nd.szTip, szTip);
 	}
+	else
+	{
+		lstrcpy(nd.szTip, L"");
+	}
 	if(Shell_NotifyIcon(NIM_ADD, &nd) == TRUE)
 	{
 		m_mapNotifyData.insert(std::make_pair(uID, nd));
