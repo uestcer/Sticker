@@ -311,6 +311,22 @@
 			<Filter
 				Name="StickerCore"
 				>
+				<File
+					RelativePath=".\lua_stickercore.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\lua_stickercore.h"
+					>
+				</File>
+				<File
+					RelativePath=".\stickercore.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\stickercore.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 	</Files>

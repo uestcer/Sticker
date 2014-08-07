@@ -8,7 +8,9 @@ function MainWndHostWnd_OnSize(hostWnd, type, width, height)
 end
 
 function CloseBtn_OnLButtonDown(self)
-	os.exit()
+	local stickerCore = XLGetObject("Sticker.Core")
+	stickerCore:ExitSticker()
+	-- os.exit()
 end
 
 

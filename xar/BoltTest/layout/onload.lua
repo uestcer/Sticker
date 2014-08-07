@@ -19,16 +19,10 @@ function Main()
 	frameHostWnd:BindUIObjectTree(objtree)
 	frameHostWnd:Create()
 	
-	local iconPath = [[C:\Users\Winter\Desktop\ico101.ico]]
-	local notifyHelper = XLGetObject("Sticker.Helper.NotifyIcon")
-	local uID = notifyHelper:AddIcon(iconPath, "哈哈哈")
-	local uID2 = notifyHelper:AddIcon(iconPath, "sdfjlk0")
-	local uID3 = notifyHelper:AddIcon(iconPath, "asdfasfadadsfa")
-	notifyHelper:DelIcon(uID2)
-	local cookie = notifyHelper:Attach(function(uID, message)
-		XLPrint("[Dongyu] uID = " .. tostring(uID) .. ", message = " ..tostring(message))
+	local stickerCore = XLGetObject("Sticker.Core")
+	stickerCore:AttachListener(function()
+		XLPrint("[Dongyu] Sticker Exit!")
 	end)
-	
 	
 	return true
 end
