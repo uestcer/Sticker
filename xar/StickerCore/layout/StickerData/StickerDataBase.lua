@@ -1,6 +1,8 @@
 local function SDBPrint(str) XLPrint("[Sticker][StickerDataBase] " .. tostring(str)) end
 
 function Open(helperObj)
+	SDBPrint("Open Enter")
+	
 	local fileSystem = XLGetObject("Sticker.Helper.FileSystem")
 	local exeDir = fileSystem:GetCurrentExeDir()
 	local xmlPath = fileSystem:PathCombine(exeDir, "Profiles\\sticker_data.xml")
@@ -53,6 +55,7 @@ function Open(helperObj)
 end
 
 function Close(helperObj)
+	SDBPrint("Close Enter")
 	for i=1,5 do
 		local item = {}
 		item.stick_id = tostring("stick_id" .. i)
@@ -104,6 +107,8 @@ function Close(helperObj)
 end
 
 function AddStick(helperObj, text, l, t, r, b, color)
+	SDBPrint("AddStick text = " .. tostring(text) .. ", l = " .. tostring(l) .. ",t = " .. tostring(t) .. ", r = " .. tostring(r) .. ", b = " .. tostring(b) .. ", color = " .. color )
+
 	text = text or ""
 	l = l or 0
 	t = t or 0
@@ -125,10 +130,13 @@ function AddStick(helperObj, text, l, t, r, b, color)
 	item.pos_bottom = b
 	table.insert(helperObj.DataTable["stick_list"], item)
 	
+	SDBPrint("AddStick stick_id = " .. tostring(stick_id))
 	return stick_id
 end
 
 function DelStick(helperObj, stick_id)
+	SDBPrint("DelStick stick_id = " .. tostring(stick_id))
+	
 	if stick_id == nil then
 		return 
 	end
@@ -142,6 +150,8 @@ function DelStick(helperObj, stick_id)
 end
 
 function SetStick(helperObj, stick_id, text, l, t, r, b, color)
+	SDBPrint("SetStick stick_id = " .. tostring(stick_id) .. ", text = " .. tostring(text) .. ", l = " .. tostring(l) .. ",t = " .. tostring(t) .. ", r = " .. tostring(r) .. ", b = " .. tostring(b) .. ", color = " .. color )
+	
 	if stick_id == nil then
 		return
 	end
@@ -159,6 +169,7 @@ function SetStick(helperObj, stick_id, text, l, t, r, b, color)
 end
 
 function GetStick(helperObj, stick_id)
+	SDBPrint("GetStick stick_id = " .. tostring(stick_id))
 	if stick_id == nil then
 		return
 	end
@@ -179,6 +190,7 @@ function GetStick(helperObj, stick_id)
 end
 
 function GetAllStick(helperObj)
+	SDBPrint("GetAllStick Enter")
 	local sticklist = {}
 	for index, data in ipairs(helperObj.DataTable["stick_list"]) do
 		table.insert(sticklist, data.stick_id)
