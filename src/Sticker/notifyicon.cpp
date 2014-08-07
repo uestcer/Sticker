@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "notifyicon.h"
 
 HWND NotifyIcon::m_hWnd = NULL;

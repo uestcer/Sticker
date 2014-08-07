@@ -1,4 +1,4 @@
-#include <Windows.h>
+#include "stdafx.h"
 #include <Shlwapi.h>
 #include "filesystem.h"
 

@@ -1,10 +1,6 @@
 #ifndef _LUA_XML_H_
 #define _LUA_XML_H_
 
-#include <windows.h>
-#include <XLUE.h>
-#include <XLGraphic.h>
-#include <XLLuaRuntime.h>
 #include "tinyxml2.h"
 
 #define XLUE_LUAXML_CLASSNAME "Sticker.Helper.Xml.Class"

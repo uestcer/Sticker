@@ -1,6 +1,5 @@
+#include "stdafx.h"
 #include "lua_xml.h"
-#include <string>
-#include <map>
 
 static XLLRTGlobalAPI LuaXmlFunctions[] = {
 	{"GetXml", LuaXML::GetXml},

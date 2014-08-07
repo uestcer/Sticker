@@ -1,11 +1,6 @@
 #ifndef _LUA_FILESYSTEM_
 #define _LUA_FILESYSTEM_
 
-#include <windows.h>
-#include <XLUE.h>
-#include <XLGraphic.h>
-#include <XLLuaRuntime.h>
-
 #define XLUE_LUAFILESYSTEM_CLASSNAME "Sticker.Helper.FileSystem.Class"
 #define XLUE_LUAFILESYSTEM_OBJNAME "Sticker.Helper.FileSystem"
 

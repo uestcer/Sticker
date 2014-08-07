@@ -1,8 +1,7 @@
 #ifndef _NOTIFYICON_H_
 #define _NOTIFYICON_H_
-#include <windows.h>
+
 #include <shellapi.h>
-#include <map>
 
 typedef VOID (*NotifyIconCallback) (UINT uID, UINT message);
 

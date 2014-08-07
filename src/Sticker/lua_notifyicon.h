@@ -1,12 +1,6 @@
 #ifndef _LUA_NOTIFYICON_H_
 #define _LUA_NOTIFYICON_H_
 
-#include <windows.h>
-#include <XLUE.h>
-#include <XLGraphic.h>
-#include <XLLuaRuntime.h>
-#include <vector>
-
 #define XLUE_LUANOTIFYICON_CLASSNAME "Sticker.Helper.NotifyIcon.Class"
 #define XLUE_LUANOTIFYICON_OBJNAME "Sticker.Helper.NotifyIcon"
 

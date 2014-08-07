@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "filesystem.h"
 #include "lua_filesystem.h"
 #include "transcode.h"

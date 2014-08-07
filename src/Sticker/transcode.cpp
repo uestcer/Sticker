@@ -1,6 +1,5 @@
+#include "stdafx.h"
 #include "transcode.h"
-#include <Windows.h>
-
 
 void TransCode::Unicode_to_UTF8( const wchar_t* in, unsigned len, std::string& out )
 {

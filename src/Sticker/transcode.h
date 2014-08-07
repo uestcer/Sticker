@@ -1,8 +1,6 @@
 #ifndef _TRANSCODE_H_
 #define _TRANSCODE_H_
 
-#include <string>
-
 class TransCode
 {
 public:

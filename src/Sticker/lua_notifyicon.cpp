@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "lua_notifyicon.h"
 #include "notifyicon.h"
 #include "transcode.h"
