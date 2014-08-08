@@ -1,0 +1,238 @@
+<xlue>
+	<control class="StickMainWndCtrl">
+		<attr_def>
+		</attr_def>
+		<method_def>
+			<SetStick file="StickMainWnd.xml.lua" func="StickCtrl_SetStick" />
+			<GetStick file="StickMainWnd.xml.lua" func="StickCtrl_GetStick" />
+		</method_def>
+		<event_def>
+			<OnAddBtnClick>
+				<param>
+					<int />   <!-- taskid -->
+				</param>
+			</OnAddBtnClick>
+			<OnDelBtnClick>
+				<param>
+					<int />   <!-- taskid -->
+				</param>
+			</OnDelBtnClick>
+			<OnColorChange>
+				<param>
+					<string/>  <!-- oldcolor -->
+					<string/>  <!-- newcolor -->
+				</param>
+			</OnColorChange>
+			<OnTextChange>
+				<param>
+					<string/>   <!-- oldtext -->
+					<string/>   <!-- newtext -->
+				</param>
+			</OnTextChange>
+		</event_def>
+		<objtemplate>
+			<children>
+				<obj id="shadow.texture" class="TextureObject">
+					<attr>
+						<left>0</left>
+						<top>0</top>
+						<width>father.width</width>
+						<height>father.height</height>
+						<texture>Texture.Mainwnd.Shadow</texture>
+					</attr>
+					<children>
+						<obj id="bkg.texture" class="TextureObject">
+							<attr>
+								<left>4</left>
+								<top>3</top>
+								<width>father.width-8</width>
+								<height>father.height-12</height>
+							</attr>
+							<children>
+								<obj id="caption.bkg" class="TextureObject">
+									<attr>
+										<left>0</left>
+										<top>0</top>
+										<width>father.width</width>
+										<height>28</height>
+										<texture>Texture.Mainwnd.CaptionBkg</texture>
+									</attr>
+									<children>
+										<obj id="caption.caption" class="CaptionObject">
+											<attr>
+												<left>0</left>
+												<top>0</top>
+												<width>father.width</width>
+												<height>father.height</height>
+											</attr>
+											<children>
+
+											</children>
+										</obj>
+									</children>
+								</obj>
+								<obj id="edit.bkg" class="TextureObject">
+									<attr>
+										<left>0</left>
+										<top>28</top>
+										<width>father.width</width>
+										<height>father.height-28</height>
+										<texture>Texture.Mainwnd.Bkg</texture>
+									</attr>
+									<children>
+										
+									
+										<obj id="resize.image" class="ImageObject">
+											<attr>
+												<left>father.width-11</left>
+												<top>father.height-11</top>
+												<width>8</width>
+												<height>8</height>
+												<image>Bitmap.Mainwnd.StretchBtn</image>
+											</attr>
+										</obj>
+									</children>
+								</obj>
+								<obj id="resize.layout" class="LayoutObject">
+									<attr>
+										<left>0</left>
+										<top>0</top>
+										<width>father.width</width>
+										<height>father.height</height>
+									</attr>
+									<children>
+										<obj id="topleft.resize" class="ResizeObject">
+											<attr>
+												<left>0</left>
+												<top>0</top>
+												<width>4</width>
+												<height>4</height>
+												<type>topleft</type>
+												<zorder>10000</zorder>
+											</attr>
+										</obj>
+										<obj id="topright.resize" class="ResizeObject">
+											<attr>
+												<left>father.width-4</left>
+												<top>0</top>
+												<width>4</width>
+												<height>4</height>
+												<type>topright</type>
+												<zorder>10000</zorder>
+											</attr>
+										</obj>
+										<obj id="bottomleft.resize" class="ResizeObject">
+											<attr>
+												<left>0</left>
+												<top>father.height-4</top>
+												<width>4</width>
+												<height>4</height>
+												<type>bottomleft</type>
+												<zorder>10000</zorder>
+											</attr>
+										</obj>
+										<obj id="bottomright.resize" class="ResizeObject">
+											<attr>
+												<left>father.width-4</left>
+												<top>father.height-4</top>
+												<width>4</width>
+												<height>4</height>
+												<type>bottomright</type>
+												<zorder>10000</zorder>
+											</attr>
+										</obj>
+										<obj id="top.resize" class="ResizeObject">
+											<attr>
+												<left>4</left>
+												<top>0</top>
+												<width>father.width-8</width>
+												<height>4</height>
+												<type>top</type>
+												<zorder>10000</zorder>
+											</attr>
+										</obj>
+										<obj id="bottom.resize" class="ResizeObject">
+											<attr>
+												<left>4</left>
+												<top>father.height-4</top>
+												<width>father.width-8</width>
+												<height>4</height>
+												<type>bottom</type>
+												<zorder>10000</zorder>
+											</attr>
+										</obj>
+										<obj id="left.resize" class="ResizeObject">
+											<attr>
+												<left>0</left>
+												<top>4</top>
+												<width>4</width>
+												<height>father.height-8</height>
+												<type>left</type>
+												<zorder>10000</zorder>
+											</attr>
+										</obj>
+										<obj id="right.resize" class="ResizeObject">
+											<attr>
+												<left>father.width-4</left>
+												<top>4</top>
+												<width>4</width>
+												<height>father.height-8</height>
+												<type>right</type>
+												<zorder>10000</zorder>
+											</attr>
+										</obj>
+									</children>
+								</obj>
+							</children>
+						</obj>
+					</children>
+				</obj>
+			</children>
+			<eventlist>
+				<event name="OnInitControl" file="StickMainWnd.xml.lua" func="StickCtrl_OnInitControl" />
+				<event name="OnDestroy" file="StickMainWnd.xml.lua" func="StickCtrl_OnDestroy" />
+			</eventlist>
+		</objtemplate>
+	</control>
+	
+	<objtreetemplate id="StickMainWndTree" class="ObjectTreeTemplate">
+		<attr>
+			<left>-200</left>
+			<top>-200</top>
+			<width>2000</width>
+			<height>2000</height>
+		</attr>
+		<obj id="ctrl" class="StickMainWndCtrl">
+			<attr>
+				<left>0</left>
+				<top>0</top>
+				<width>0</width>
+				<height>0</height>
+			</attr>
+		</obj>
+	</objtreetemplate>
+	
+	<hostwndtemplate id="StickMainWnd" class="FrameHostWnd">
+		<attr>
+			<layered>1</layered>
+			<left>0</left>
+			<top>0</top>
+			<width>188</width>
+			<height>177</height>
+			<visible>1</visible>
+			<enable>1</enable>
+			<minwidth>188</minwidth>
+			<minheight>132</minheight>
+			<fps>30</fps>
+		</attr>
+		<eventlist>
+			<event name="OnSize">
+				local arg = {...}
+				local hostwnd = arg[1]
+				local objTree = hostwnd:GetBindUIObjectTree()
+				local rootObj = objTree:GetRootObject()
+				rootObj:SetObjPos(0,0,arg[3],arg[4])
+			</event>
+		</eventlist>
+	</hostwndtemplate>
+</xlue>

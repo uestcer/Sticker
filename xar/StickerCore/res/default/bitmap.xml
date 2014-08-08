@@ -1,13 +1,11 @@
 <XLUE>
 	<resource>
-		<texture id="Texture.BoltTest.Bkg.White" type="Stretch" image="Common/Common.Bkg.White.png" />
-		<texture id="Texture.BoltTest.Bkg.Stripe" type="Stretch" image="Common/Common.Bkg.Stripe.png" />
-		<texture id="Texture.BoltTest.Bkg.Shadow" type="NineInOne" image="Common/Common.BkgShadow.png" />
-		
-		<texture id="Texture.BoltTest.Btn.Blue" type="Stretch" image="Common/Common.Btn.Blue.png" />
-		
-		<texture id="Texture.DownloadingHeatTips.Shadow" type="NineInOne" image="DownloadingHeatTips.Shadow.png" />
-		
-		<texture id="Texture.Red.Shadow" type="Stretch" image="Common/Common.Red.Shadow.png" />
+		<bitmap id="Bitmap.Mainwnd.ClostBtn" path="MainWnd/bitmap.mainwnd.closebtn.png" />
+		<bitmap id="Bitmap.Mainwnd.NewBtn" path="MainWnd/bitmap.mainwnd.newbtn.png" />
+		<bitmap id="Bitmap.Mainwnd.StretchBtn" path="MainWnd/bitmap.mainwnd.stretchbtn.png" />
+	
+		<texture id="Texture.Mainwnd.Bkg" type="Stretch" image="Mainwnd/texture.mainwnd.bkg.png" />
+		<texture id="Texture.Mainwnd.CaptionBkg" type="Stretch" image="Mainwnd/texture.mainwnd.captionbkg.png" />
+		<texture id="Texture.Mainwnd.Shadow" type="NineInOne" image="Mainwnd/texture.mainwnd.shadow.png" />
 	</resource>
 </XLUE>

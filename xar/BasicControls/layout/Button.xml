@@ -1,0 +1,50 @@
+<xlue>
+	<control class="Button">
+		<attr_def>
+			<attr name="text" type="string"/>
+			<attr name="image_normal" type=""><default>xxx</default></attr>
+			<attr name="image_down" type=""><default>xxx</default></attr>
+			<attr name="image_hover" type=""><default>xxx</default></attr>
+			<attr name="image_disable" type=""><default>xxx</default></attr>
+			<attr name="text_color" type="string"><default>xxx</default></attr>
+			<attr name="text_font" type="string"><default>xxx</default></attr>
+			<attr name="text_valign" type="string"><default>center</default></attr>
+			<attr name="text_halign" type="string"><default>center</default></attr>
+			<attr name="text_left" type="string"/>
+			<attr name="text_right" type="string"/>
+			<attr name="text_color_normal" type="string"><default>xxx</default></attr>
+			<attr name="text_color_down" type="string"><default>xxx</default></attr>
+			<attr name="text_color_hover" type="string"><default>xxx</default></attr>
+			<attr name="text_color_disable" type="string"><default>xxx</default></attr>
+		</attr_def>
+		<method_def>
+			<GetText file="Button.xml.lua" func="GetText" />
+			<SetImage file="Button.xml.lua" func="SetImage" />
+			<SetText file="Button.xml.lua" func="SetText" />
+			<SetColor file="Button.xml.lua" func="SetColor" />
+			<SetFont file="Button.xml.lua" func="SetFont" />
+			<SetVAlign file="Button.xml.lua" func="SetVAlign" />
+			<SetHAlign file="Button.xml.lua" func="SetHAlign" />
+			<SetTextPos file="Button.xml.lua" func="SetTextPos" />
+			<SetColorEx file="Button.xml.lua" func="SetColorEx" />
+		</method_def>
+		<event_def>
+			<OnClick/>
+		</event_def>
+		<objtemplate>
+			<children>
+				<obj id="bkg" class="TextureObject">
+					<attr>
+						<left>0</left>
+						<top>0</top>
+						<width>father.width</width>
+						<height>father.height</height>
+					</attr>
+					<children>
+						
+					</children>
+				</obj>
+			</children>
+		</objtemplate>
+	</control>
+</xlue>
