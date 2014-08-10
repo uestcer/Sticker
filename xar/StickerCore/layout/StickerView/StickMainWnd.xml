@@ -9,12 +9,12 @@
 		<event_def>
 			<OnAddBtnClick>
 				<param>
-					<int />   <!-- taskid -->
+					<int />   <!-- stickid -->
 				</param>
 			</OnAddBtnClick>
 			<OnDelBtnClick>
 				<param>
-					<int />   <!-- taskid -->
+					<int />   <!-- stickid -->
 				</param>
 			</OnDelBtnClick>
 			<OnColorChange>
@@ -66,15 +66,26 @@
 												<height>father.height</height>
 											</attr>
 											<children>
-												<obj id="new.button" class="Button.Ctrl">
+												<obj id="add.button" class="Button.Ctrl">
 													<attr>
-														<left>10</left>
-														<top>10</top>
-														<width>15</width>
-														<height>15</height>
+														<left>8</left>
+														<top>5</top>
+														<width>18</width>
+														<height>18</height>
 													</attr>
 													<eventlist>
-														<event name="OnClick" file="StickMainWnd.xml.lua" func="NewButton_OnClick" />
+														<event name="OnClick" file="StickMainWnd.xml.lua" func="AddButton_OnClick" />
+													</eventlist>
+												</obj>
+												<obj id="del.button" class="Button.Ctrl">
+													<attr>
+														<left>father.width-26</left>
+														<top>5</top>
+														<width>18</width>
+														<height>18</height>
+													</attr>
+													<eventlist>
+														<event name="OnClick" file="StickMainWnd.xml.lua" func="DelButton_OnClick" />
 													</eventlist>
 												</obj>
 											</children>
