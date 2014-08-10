@@ -1,21 +1,22 @@
 <xlue>
-	<control class="Button">
+	<control class="Button.Ctrl">
 		<attr_def>
 			<attr name="text" type="string"/>
-			<attr name="image_normal" type=""><default>xxx</default></attr>
-			<attr name="image_down" type=""><default>xxx</default></attr>
-			<attr name="image_hover" type=""><default>xxx</default></attr>
-			<attr name="image_disable" type=""><default>xxx</default></attr>
-			<attr name="text_color" type="string"><default>xxx</default></attr>
-			<attr name="text_font" type="string"><default>xxx</default></attr>
+			<attr name="image_normal" type=""><default>Texture.Button.Bkg_Normal</default></attr>
+			<attr name="image_down" type=""><default>Texture.Button.Bkg_Down</default></attr>
+			<attr name="image_hover" type=""><default>Texture.Button.Bkg_Hover</default></attr>
+			<attr name="image_disable" type=""><default>Texture.Button.Bkg_Disable</default></attr>
+			<attr name="text_font" type="string"><default>Font.Button.Text</default></attr>
+			<attr name="text_color_normal" type="string"><default>Color.Button.Text_Normal</default></attr>
+			<attr name="text_color_down" type="string"><default>Color.Button.Text_Down</default></attr>
+			<attr name="text_color_hover" type="string"><default>Color.Button.Text_Hover</default></attr>
+			<attr name="text_color_disable" type="string"><default>Color.Button.Text_Disable</default></attr>
 			<attr name="text_valign" type="string"><default>center</default></attr>
 			<attr name="text_halign" type="string"><default>center</default></attr>
 			<attr name="text_left" type="string"/>
+			<attr name="text_top" type="string"/>
 			<attr name="text_right" type="string"/>
-			<attr name="text_color_normal" type="string"><default>xxx</default></attr>
-			<attr name="text_color_down" type="string"><default>xxx</default></attr>
-			<attr name="text_color_hover" type="string"><default>xxx</default></attr>
-			<attr name="text_color_disable" type="string"><default>xxx</default></attr>
+			<attr name="text_bottom" type="string"/>
 		</attr_def>
 		<method_def>
 			<GetText file="Button.xml.lua" func="GetText" />
@@ -23,10 +24,9 @@
 			<SetText file="Button.xml.lua" func="SetText" />
 			<SetColor file="Button.xml.lua" func="SetColor" />
 			<SetFont file="Button.xml.lua" func="SetFont" />
-			<SetVAlign file="Button.xml.lua" func="SetVAlign" />
-			<SetHAlign file="Button.xml.lua" func="SetHAlign" />
+			<SetTextVAlign file="Button.xml.lua" func="SetTextVAlign" />
+			<SetTextHAlign file="Button.xml.lua" func="SetTextHAlign" />
 			<SetTextPos file="Button.xml.lua" func="SetTextPos" />
-			<SetColorEx file="Button.xml.lua" func="SetColorEx" />
 		</method_def>
 		<event_def>
 			<OnClick/>
@@ -41,10 +41,25 @@
 						<height>father.height</height>
 					</attr>
 					<children>
-						
+						<obj id="text" class="TextObject">
+							<attr>
+								<left>0</left>
+								<top>0</top>
+								<width>father.width</width>
+								<height>father.height</height>
+							</attr>
+						</obj>
 					</children>
 				</obj>
 			</children>
+			<eventlist>
+				<event name="OnInitControl" file="Button.xml.lua" func="OnInitControl" />
+				<event name="OnLButtonDown" file="Button.xml.lua" func="OnLButtonDown" />
+				<event name="OnLButtonUp" file="Button.xml.lua" func="OnLButtonUp" />
+				<event name="OnMouseMove" file="Button.xml.lua" func="OnMouseMove" />
+				<event name="OnMouseLeave" file="Button.xml.lua" func="OnMouseLeave" />
+				<event name="OnEnableChange" file="Button.xml.lua" func="OnEnableChange" />
+			</eventlist>
 		</objtemplate>
 	</control>
 </xlue>

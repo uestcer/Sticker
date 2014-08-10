@@ -66,7 +66,17 @@
 												<height>father.height</height>
 											</attr>
 											<children>
-
+												<obj id="new.button" class="Button.Ctrl">
+													<attr>
+														<left>10</left>
+														<top>10</top>
+														<width>15</width>
+														<height>15</height>
+													</attr>
+													<eventlist>
+														<event name="OnClick" file="StickMainWnd.xml.lua" func="NewButton_OnClick" />
+													</eventlist>
+												</obj>
 											</children>
 										</obj>
 									</children>

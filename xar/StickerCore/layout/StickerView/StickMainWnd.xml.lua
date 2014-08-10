@@ -14,3 +14,7 @@ end
 function StickCtrl_OnDestroy(self)
 
 end
+
+function NewButton_OnClick(btnObj)
+	XLMessageBox("OnClick!!")
+end

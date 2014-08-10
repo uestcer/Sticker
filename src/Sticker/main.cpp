@@ -116,6 +116,7 @@ bool LoadXAR()
 	//设置XAR的搜索路径
 	result = XLUE_AddXARSearchPath(strCurDir);
 	//加载主XAR,此时会执行该XAR的启动脚本onload.lua
+	result = XLUE_LoadXAR("BasicControls");
 	result = XLUE_LoadXAR("StickerCore");
 	if(result != 0)
 	{
