@@ -2,10 +2,10 @@
 	<control class="Button.Ctrl">
 		<attr_def>
 			<attr name="text" type="string"/>
-			<attr name="image_normal" type=""><default>Texture.Button.Bkg_Normal</default></attr>
-			<attr name="image_down" type=""><default>Texture.Button.Bkg_Down</default></attr>
-			<attr name="image_hover" type=""><default>Texture.Button.Bkg_Hover</default></attr>
-			<attr name="image_disable" type=""><default>Texture.Button.Bkg_Disable</default></attr>
+			<attr name="image_normal" type="string"><default>Texture.Button.Bkg_Normal</default></attr>
+			<attr name="image_down" type="string"><default>Texture.Button.Bkg_Down</default></attr>
+			<attr name="image_hover" type="string"><default>Texture.Button.Bkg_Hover</default></attr>
+			<attr name="image_disable" type="string"><default>Texture.Button.Bkg_Disable</default></attr>
 			<attr name="text_font" type="string"><default>Font.Button.Text</default></attr>
 			<attr name="text_color_normal" type="string"><default>Color.Button.Text_Normal</default></attr>
 			<attr name="text_color_down" type="string"><default>Color.Button.Text_Down</default></attr>

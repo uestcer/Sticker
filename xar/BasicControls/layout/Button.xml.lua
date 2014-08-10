@@ -159,17 +159,17 @@ function __SetState(self, newState, force)
 	local bkgObj = self:GetControlObject("bkg")
 	local textObj = self:GetControlObject("text")
 	if newState == "normal" then
-		bkgObj:SetTextureID(attr.image_normal)
-		textObj:SetTextColorResID(attr.text_color_normal)
+		bkgObj:SetTextureID(attr.image_normal or "")
+		textObj:SetTextColorResID(attr.text_color_normal or "")
 	elseif newState == "down" then
-		bkgObj:SetTextureID(attr.image_down)
-		textObj:SetTextColorResID(attr.text_color_down)
+		bkgObj:SetTextureID(attr.image_down or "")
+		textObj:SetTextColorResID(attr.text_color_down or "")
 	elseif newState == "hover" then
-		bkgObj:SetTextureID(attr.image_hover)
-		textObj:SetTextColorResID(attr.text_color_hover)
+		bkgObj:SetTextureID(attr.image_hover or "")
+		textObj:SetTextColorResID(attr.text_color_hover or "")
 	elseif newState == "disable" then
-		bkgObj:SetTextureID(attr.image_disable)
-		textObj:SetTextColorResID(attr.text_color_disable)
+		bkgObj:SetTextureID(attr.image_disable or "")
+		textObj:SetTextColorResID(attr.text_color_disable or "")
 	end
 	
 	attr.NowState = newState
