@@ -113,9 +113,14 @@ function OnLButtonDown(self, x, y)
 	__SetState(self, "down")
 end
 
-function OnLButtonUp(self)
+function OnLButtonUp(self, x, y)
 	self:SetCaptureMouse(false)
-	__SetState(self, "normal")
+	local l,t,r,b = self:GetObjPos()
+	if x>=0 and x<=r-l and y>=0 and y<=b-t then
+		__SetState(self, "hover")
+	else
+		__SetState(self, "normal")
+	end
 	
 	self:FireExtEvent("OnClick")
 end

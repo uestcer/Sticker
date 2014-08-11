@@ -13,6 +13,7 @@ private:
 
 public:
 	static int GetLocalTime(lua_State* luaState);
+	static int GetCursorPos(lua_State* luaState);
 };
 
 #endif

@@ -72,9 +72,15 @@
 														<top>5</top>
 														<width>18</width>
 														<height>18</height>
+														<image_normal>Bitmap.Mainwnd.AddBtn_Normal</image_normal>
+														<image_down>Bitmap.Mainwnd.AddBtn_Down</image_down>
+														<image_hover>Bitmap.Mainwnd.AddBtn_Hover</image_hover>
+														<image_disable>Bitmap.Mainwnd.AddBtn_Disable</image_disable>
 													</attr>
 													<eventlist>
 														<event name="OnClick" file="StickMainWnd.xml.lua" func="AddButton_OnClick" />
+														<event name="OnMouseMove" file="StickMainWnd.xml.lua" func="AddBtn_OnMouseMove" />
+														<event name="OnMouseLeave" file="StickMainWnd.xml.lua" func="AddBtn_OnMouseLeave" />
 													</eventlist>
 												</obj>
 												<obj id="del.button" class="Button.Ctrl">
@@ -83,12 +89,22 @@
 														<top>5</top>
 														<width>18</width>
 														<height>18</height>
+														<image_normal>Bitmap.Mainwnd.DelBtn_Normal</image_normal>
+														<image_down>Bitmap.Mainwnd.DelBtn_Down</image_down>
+														<image_hover>Bitmap.Mainwnd.DelBtn_Hover</image_hover>
+														<image_disable>Bitmap.Mainwnd.DelBtn_Disable</image_disable>
 													</attr>
 													<eventlist>
 														<event name="OnClick" file="StickMainWnd.xml.lua" func="DelButton_OnClick" />
+														<event name="OnMouseMove" file="StickMainWnd.xml.lua" func="DelBtn_OnMouseMove" />
+														<event name="OnMouseLeave" file="StickMainWnd.xml.lua" func="DelBtn_OnMouseLeave" />
 													</eventlist>
 												</obj>
 											</children>
+											<eventlist>
+												<event name="OnMouseMove" file="StickMainWnd.xml.lua" func="Caption_OnMouseMove" />
+												<event name="OnMouseLeave" file="StickMainWnd.xml.lua" func="Caption_OnMouseLeave" />
+											</eventlist>
 										</obj>
 									</children>
 								</obj>
@@ -101,7 +117,23 @@
 										<texture>Texture.Mainwnd.Bkg</texture>
 									</attr>
 									<children>
-										
+										<obj id="text.edit" class="EditObject">
+											<attr>
+												<left>4</left>
+												<top>0</top>
+												<width>father.width-8</width>
+												<height>father.height-4</height>
+												<font>Font.Mainwnd.Edit</font>
+												<transparent>1</transparent>
+												<multiline>1</multiline>
+												<allowvsb>1</allowvsb>
+												<viewinset>-8,0,-4,0</viewinset>
+											</attr>
+											<eventlist>
+												<event name="OnChange" file="StickMainWnd.xml.lua" func="TextEdit_OnChange" />
+												<event name="OnFocusChange" file="StickMainWnd.xml.lua" func="TextEdit_OnFocusChange" />
+											</eventlist>
+										</obj>
 									
 										<obj id="resize.image" class="ImageObject">
 											<attr>

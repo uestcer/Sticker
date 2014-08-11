@@ -1,0 +1,23 @@
+<XLUE>
+	<resource>
+		<imagelist id="Imagelist.Mainwnd.AddBtn" vertical="0" splitter="1" varyblock="1" image="Mainwnd\imagelist.mainwnd.newbtn.png"/>
+		<texture id="Bitmap.Mainwnd.AddBtn_Normal" type="Stretch" imagelist="Imagelist.Mainwnd.AddBtn" index="1" />
+		<texture id="Bitmap.Mainwnd.AddBtn_Down" type="Stretch" imagelist="Imagelist.Mainwnd.AddBtn" index="2" />
+		<texture id="Bitmap.Mainwnd.AddBtn_Hover" type="Stretch" imagelist="Imagelist.Mainwnd.AddBtn" index="3" />
+		<texture id="Bitmap.Mainwnd.AddBtn_Disable" type="Stretch" imagelist="Imagelist.Mainwnd.AddBtn" index="4" />
+		
+		<imagelist id="Imagelist.Mainwnd.DelBtn" vertical="0" splitter="1" varyblock="1" image="Mainwnd\imagelist.mainwnd.closebtn.png"/>
+		<texture id="Bitmap.Mainwnd.DelBtn_Normal" type="Stretch" imagelist="Imagelist.Mainwnd.DelBtn" index="1" />
+		<texture id="Bitmap.Mainwnd.DelBtn_Down" type="Stretch" imagelist="Imagelist.Mainwnd.DelBtn" index="2" />
+		<texture id="Bitmap.Mainwnd.DelBtn_Hover" type="Stretch" imagelist="Imagelist.Mainwnd.DelBtn" index="3" />
+		<texture id="Bitmap.Mainwnd.DelBtn_Disable" type="Stretch" imagelist="Imagelist.Mainwnd.DelBtn" index="4" />
+		
+		<bitmap id="Bitmap.Mainwnd.StretchBtn" path="MainWnd/bitmap.mainwnd.stretchbtn.png" />
+	
+		<texture id="Texture.Mainwnd.Bkg" type="Stretch" image="Mainwnd/texture.mainwnd.bkg.png" />
+		<texture id="Texture.Mainwnd.CaptionBkg" type="Stretch" image="Mainwnd/texture.mainwnd.captionbkg.png" />
+		<texture id="Texture.Mainwnd.Shadow" type="NineInOne" image="Mainwnd/texture.mainwnd.shadow.png" />
+		
+		<font id="Font.Mainwnd.Edit" height="12" weight="normal" italic="0"  facename="defaultfont" strikeout="0" underline="0" />
+	</resource>
+</XLUE>

@@ -4,6 +4,7 @@
 
 static XLLRTGlobalAPI LuaOSShellFunctions[] = {
 	{"GetLocalTime", LuaOSShell::GetLocalTime},
+	{"GetCursorPos", LuaOSShell::GetCursorPos},
 	{NULL,NULL}
 };
 
@@ -62,4 +63,20 @@ int LuaOSShell::GetLocalTime( lua_State* luaState )
 	lua_settable(luaState, -3);
 
 	return 1;
+}
+
+int LuaOSShell::GetCursorPos( lua_State* luaState )
+{
+	POINT point;
+	BOOL bRet = ::GetCursorPos(&point);
+	if (bRet == TRUE)
+	{
+		lua_pushnumber(luaState, point.x);
+		lua_pushnumber(luaState, point.y);
+		return 2;
+	}
+	else
+	{
+		return 0;
+	}
 }
