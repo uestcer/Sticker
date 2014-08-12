@@ -19,13 +19,11 @@
 			</OnDelBtnClick>
 			<OnColorChange>
 				<param>
-					<string/>  <!-- oldcolor -->
 					<string/>  <!-- newcolor -->
 				</param>
 			</OnColorChange>
 			<OnTextChange>
 				<param>
-					<string/>   <!-- oldtext -->
 					<string/>   <!-- newtext -->
 				</param>
 			</OnTextChange>

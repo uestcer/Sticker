@@ -1,10 +1,24 @@
 
-function StickCtrl_SetStick(ctrlObj)
-
+-- SetStick 不一定要和StickDataHelper中的数据结构保持对应关系，所以不需要有 time,l,t,r,b 这些参数
+function StickCtrl_SetStick(ctrlObj,id,text,color,title)
+	local attr = ctrlObj:GetAttribute()
+	attr.stickData = attr.stickData or {}
+	if id then
+		attr.stickData["id"] = id
+	end
+	if text then
+		attr.stickData["text"] = text
+		local editObj = ctrlObj:GetControlObject("text.edit")
+		editObj:SetText(tostring(text))
+	end
+	if color then
+		attr.stickData["color"] = color
+	end
 end
 
 function StickCtrl_GetStick(ctrlObj)
-
+	local attr = ctrlObj:GetAttribute()
+	return attr.stickData
 end
 
 function StickCtrl_OnInitControl(ctrlObj)
@@ -26,7 +40,13 @@ function DelButton_OnClick(btnObj)
 end
 
 function TextEdit_OnChange(editObj)
-	
+	local text = editObj:GetText()
+	if text then
+		local ctrlObj = editObj:GetOwnerControl()
+		local attr = ctrlObj:GetAttribute()
+		attr.stickData["text"] = text
+	end
+	ctrlObj:FireExtEvent("OnTextChange", text)
 end
 
 function TextEdit_OnFocusChange(editObj, bFocus, lastFocusObj)
