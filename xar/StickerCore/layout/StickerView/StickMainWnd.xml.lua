@@ -14,6 +14,9 @@ function StickCtrl_SetStick(ctrlObj,id,text,color,title)
 	if color then
 		attr.stickData["color"] = color
 	end
+	if title then
+		attr.stickData["title"] = title
+	end
 end
 
 function StickCtrl_GetStick(ctrlObj)
@@ -22,7 +25,8 @@ function StickCtrl_GetStick(ctrlObj)
 end
 
 function StickCtrl_OnInitControl(ctrlObj)
-
+	local attr = ctrlObj:GetAttribute()
+	attr.stickData = {}
 end
 
 function StickCtrl_OnDestroy(ctrlObj)
@@ -31,22 +35,24 @@ end
 
 function AddButton_OnClick(btnObj)
 	local ctrlObj = btnObj:GetOwnerControl()
-	ctrlObj:FireExtEvent("OnAddBtnClick")
+	local attr = ctrlObj:GetAttribute()
+	ctrlObj:FireExtEvent("OnAddBtnClick", attr.stickData["id"])
 end
 
 function DelButton_OnClick(btnObj)
 	local ctrlObj = btnObj:GetOwnerControl()
-	ctrlObj:FireExtEvent("OnDelBtnClick")
+	local attr = ctrlObj:GetAttribute()
+	ctrlObj:FireExtEvent("OnDelBtnClick", attr.stickData["id"])
 end
 
 function TextEdit_OnChange(editObj)
+	local ctrlObj = editObj:GetOwnerControl()
+	local attr = ctrlObj:GetAttribute()
 	local text = editObj:GetText()
 	if text then
-		local ctrlObj = editObj:GetOwnerControl()
-		local attr = ctrlObj:GetAttribute()
 		attr.stickData["text"] = text
 	end
-	ctrlObj:FireExtEvent("OnTextChange", text)
+	ctrlObj:FireExtEvent("OnTextChange", attr.stickData["id"], attr.stickData["text"])
 end
 
 function TextEdit_OnFocusChange(editObj, bFocus, lastFocusObj)

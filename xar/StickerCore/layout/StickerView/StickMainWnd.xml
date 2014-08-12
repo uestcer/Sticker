@@ -19,11 +19,13 @@
 			</OnDelBtnClick>
 			<OnColorChange>
 				<param>
+					<int />   <!-- stickid -->
 					<string/>  <!-- newcolor -->
 				</param>
 			</OnColorChange>
 			<OnTextChange>
 				<param>
+					<int />   <!-- stickid -->
 					<string/>   <!-- newtext -->
 				</param>
 			</OnTextChange>

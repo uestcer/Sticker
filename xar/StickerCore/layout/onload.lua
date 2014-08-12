@@ -3,27 +3,6 @@ local path = fileSystem:GetUpperDir(__document)
 XLLoadModule(path .. [[\StickerData\StickerDataHelper.lua]])["RegisterObject"]()
 XLLoadModule(path .. [[\StickerView\StickerViewHelper.lua]])["RegisterObject"]()
 
-
-local templateManager = XLGetObject("Xunlei.UIEngine.TemplateManager")
-local frameHostWndTemplate = templateManager:GetTemplate("StickMainWnd", "HostWndTemplate")
-if not frameHostWndTemplate then
-	return
-end
-local frameHostWnd = frameHostWndTemplate:CreateInstance("MainFrame")
-if not frameHostWnd then
-	return
-end
-local objtreeTemplate = templateManager:GetTemplate("StickMainWndTree", "ObjectTreeTemplate")
-if not objtreeTemplate then
-	return
-end
-local objtree = objtreeTemplate:CreateInstance("MainObjectTree")
-if not objtree then
-	return
-end
-frameHostWnd:BindUIObjectTree(objtree)
-frameHostWnd:Create()
-
 local path = fileSystem:PathCombine(__document, [[..\..\res\default\StikyNot.ico]])
 local notifyHelper = XLGetObject("Sticker.Helper.NotifyIcon")
 local uID = notifyHelper:AddIcon(path)
@@ -33,8 +12,21 @@ notifyHelper:Attach(function(uID, message)
 	elseif message == "WM_RBUTTONDBLCLK" then
 		local stickerCore = XLGetObject("Sticker.Core")
 		stickerCore:ExitSticker()
+	elseif message == "WM_LBUTTONUP" then
+		nCount = 0
+		local stickViewHelper = XLGetGlobal("Sticker.StickerViewHelper")
+		stickViewHelper:AddStick(nCount, "hahahaah" .. nCount, "", nCount*100, nCount*100, nCount*100 + 188, nCount*100 + 177)
 	end
 end)
+
+local stickViewHelper = XLGetGlobal("Sticker.StickerViewHelper")
+stickViewHelper:AttachListener(function(eventName, dataTable)
+	if eventName == "OnDelBtnClick" then
+		local id = dataTable.id
+		stickViewHelper:DelStick(id)
+	end
+end)
+
 local stickerCore = XLGetObject("Sticker.Core")
 stickerCore:AttachListener(function()
 	notifyHelper:DelIcon(uID)
