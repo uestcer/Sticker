@@ -9,23 +9,23 @@
 		<event_def>
 			<OnAddBtnClick>
 				<param>
-					<int />   <!-- stickid -->
+					<string />   <!-- stickid -->
 				</param>
 			</OnAddBtnClick>
 			<OnDelBtnClick>
 				<param>
-					<int />   <!-- stickid -->
+					<string />   <!-- stickid -->
 				</param>
 			</OnDelBtnClick>
 			<OnColorChange>
 				<param>
-					<int />   <!-- stickid -->
+					<string />   <!-- stickid -->
 					<string/>  <!-- newcolor -->
 				</param>
 			</OnColorChange>
 			<OnTextChange>
 				<param>
-					<int />   <!-- stickid -->
+					<string />   <!-- stickid -->
 					<string/>   <!-- newtext -->
 				</param>
 			</OnTextChange>

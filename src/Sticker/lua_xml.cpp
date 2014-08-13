@@ -112,13 +112,20 @@ bool LuaXML::ConvertXmlElemToLuaTable( tinyxml2::XMLElement *pElem, lua_State* l
 			{
 				lua_pushstring(luaState, strName);
 				lua_pushstring(luaState, strText);
+				lua_settable(luaState, -3);
 			}
 			else
 			{
 				lua_pushstring(luaState, strName);
-				ConvertXmlElemToLuaTable(iterElem, luaState);
+				if(ConvertXmlElemToLuaTable(iterElem, luaState))
+				{
+					lua_settable(luaState, -3);
+				}
+				else
+				{
+					lua_pop(luaState, 1);
+				}
 			}
-			lua_settable(luaState, -3);
 			iterElem = iterElem->NextSiblingElement();
 		}
 	}
@@ -218,6 +225,7 @@ int LuaXML::GetXml( lua_State* luaState )
 		lua_newtable(luaState);
 		const char* strName = pDoc->RootElement()->Name();
 		lua_pushstring(luaState, strName);
+
 		ConvertXmlElemToLuaTable(pDoc->RootElement(), luaState);
 		lua_settable(luaState, -3);
 		

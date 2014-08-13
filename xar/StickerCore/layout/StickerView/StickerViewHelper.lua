@@ -1,6 +1,9 @@
+local function SVHPrint(str) XLPrint("[Sticker][StickViewHelper] " .. tostring(str)) end
+
 
 function AddStick(helperObj,id,text,color,l,t,r,b)
 	if id == nil or text == nil or color == nil or l == nil or t == nil or r == nil or b == nil then
+		SVHPrint("AddStick 参数不合法 id="..tostring(id)..",color="..tostring(color)..",l="..tostring(l)..",t="..tostring(t)..",r="..tostring(r)..",b="..tostring(b))
 		return
 	end
 	local hostwndId = "StickMainWnd.Instance." .. tostring(id)
@@ -54,6 +57,17 @@ function AddStick(helperObj,id,text,color,l,t,r,b)
 	ctrlObj:AttachListener("OnTextChange", true, function(obj, eventName, stick_id, newText)
 		FireViewEvent("OnTextChange", {["id"] = stick_id, ["newText"] = newText})
 	end)
+	hostwnd:AttachListener("OnMove", true, function(targetHostWnd, eventName)
+		local objtree = targetHostWnd:GetBindUIObjectTree()
+		local ctrlObj = objtree:GetRootObject()
+		local stickData = ctrlObj:GetStick()
+		local stick_id = stickData["id"]
+		if stick_id == nil then
+			return
+		end
+		local l,t,r,b = targetHostWnd:GetWindowRect()
+		FireViewEvent("OnPosChange", {["id"] = stick_id, ["l"] = l, ["t"] = t, ["r"] = r, ["b"] = b})
+	end)
 	
 	helperObj.StickIdTable[id] = true
 	return true
@@ -61,6 +75,7 @@ end
 
 function DelStick(helperObj,id)
 	if id == nil then
+		SVHPrint("DelStick 参数不合法：id="..tostring(id))
 		return
 	end
 	local hostwndId = "StickMainWnd.Instance." .. tostring(id)
@@ -68,6 +83,7 @@ function DelStick(helperObj,id)
 	local hostwndManager = XLGetObject("Xunlei.UIEngine.HostWndManager")
 	local hostwnd = hostwndManager:GetHostWnd(hostwndId)
 	if hostwnd == nil then
+		SVHPrint("DelStick 未找到HostWnd： hostwndId="..tostring(hostwndId))
 		return
 	end
 	local objtree = hostwnd:UnbindUIObjectTree()  
@@ -143,6 +159,20 @@ function GetAllStick(helperObj)
 	return stickIdArray
 end
 
+function BringStickToTop(helperObj, id)
+	if id == nil then
+		return
+	end
+	local hostwndId = "StickMainWnd.Instance." .. tostring(id)
+	
+	local hostwndManager = XLGetObject("Xunlei.UIEngine.HostWndManager")
+	local hostwnd = hostwndManager:GetHostWnd(hostwndId)
+	if hostwnd == nil then
+		return
+	end
+	hostwnd:BringWindowToTop()
+end
+
 function AttachListener(helperObj, callback)
 	if callback == nil then
 		return
@@ -166,6 +196,7 @@ function RegisterObject()
 	helperObj.SetStick = SetStick
 	helperObj.GetStick = GetStick
 	helperObj.GetAllStick = GetAllStick
+	helperObj.BringStickToTop = BringStickToTop
 	helperObj.AttachListener = AttachListener
 	helperObj.DetachListener = DetachListener
 	

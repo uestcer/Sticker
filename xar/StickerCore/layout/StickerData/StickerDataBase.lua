@@ -24,7 +24,7 @@ function Open(helperObj)
 					item.stick_id = data.stick_id
 					item.stick_time = data.stick_time
 					item.stick_color = data.stick_color
-					item.stick_text = data.stick_text
+					item.stick_text = data.stick_text or ""
 					local l,t,r,b = string.match(tostring(data.stick_pos), "(%d+),(%d+),(%d+),(%d+)")
 					item.pos_left = tonumber(l)
 					item.pos_top = tonumber(t)
@@ -41,7 +41,7 @@ function Open(helperObj)
 					item.stick_id = data.stick_id
 					item.stick_time = data.stick_time
 					item.stick_color = data.stick_color
-					item.stick_text = data.stick_text
+					item.stick_text = data.stick_text or ""
 					local l,t,r,b = string.match(tostring(data.stick_pos), "(%d+),(%d+),(%d+),(%d+)")
 					item.pos_left = tonumber(l)
 					item.pos_top = tonumber(t)
@@ -56,20 +56,6 @@ end
 
 function Close(helperObj)
 	SDBPrint("Close Enter")
-	for i=1,5 do
-		local item = {}
-		item.stick_id = tostring("stick_id" .. i)
-		item.stick_time = tostring("stick_time" .. i)
-		item.stick_color = tostring("stick_color" .. i)
-		item.stick_text = tostring("stick_text" .. i)
-		item.pos_left = i
-		item.pos_top = i+1
-		item.pos_right = i+2
-		item.pos_bottom = i+3
-		table.insert(helperObj.DataTable["stick_list"], item)
-		table.insert(helperObj.DataTable["recycle_list"], item)
-	end
-
 	-- 将 DataTable 中的内容保存到 xml 中
 	local fileSystem = XLGetObject("Sticker.Helper.FileSystem")
 	local exeDir = fileSystem:GetCurrentExeDir()
@@ -150,7 +136,7 @@ function DelStick(helperObj, stick_id)
 end
 
 function SetStick(helperObj, stick_id, text, l, t, r, b, color)
-	SDBPrint("SetStick stick_id = " .. tostring(stick_id) .. ", text = " .. tostring(text) .. ", l = " .. tostring(l) .. ",t = " .. tostring(t) .. ", r = " .. tostring(r) .. ", b = " .. tostring(b) .. ", color = " .. color )
+	SDBPrint("SetStick stick_id = " .. tostring(stick_id) .. ", text = " .. tostring(text) .. ", l = " .. tostring(l) .. ",t = " .. tostring(t) .. ", r = " .. tostring(r) .. ", b = " .. tostring(b) .. ", color = " .. tostring(color) )
 	
 	if stick_id == nil then
 		return

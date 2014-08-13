@@ -5,6 +5,7 @@
 static XLLRTGlobalAPI LuaOSShellFunctions[] = {
 	{"GetLocalTime", LuaOSShell::GetLocalTime},
 	{"GetCursorPos", LuaOSShell::GetCursorPos},
+	{"GetScreenSize", LuaOSShell::GetScreenSize},
 	{NULL,NULL}
 };
 
@@ -30,6 +31,16 @@ void* LuaOSShell::GetObject( void* ud )
 {
 	static OSShell osshell;
 	return (void*)&osshell;
+}
+
+OSShell* LuaOSShell::GetOSShellObjFromLuaState( lua_State* luaState )
+{
+	OSShell** ppOSShell = (OSShell**)luaL_checkudata(luaState, 1, XLUE_LUAOSSHELL_CLASSNAME);
+	if (ppOSShell != NULL)
+	{
+		return *ppOSShell;
+	}
+	return NULL;
 }
 
 int LuaOSShell::GetLocalTime( lua_State* luaState )
@@ -79,4 +90,17 @@ int LuaOSShell::GetCursorPos( lua_State* luaState )
 	{
 		return 0;
 	}
+}
+
+int LuaOSShell::GetScreenSize( lua_State* luaState )
+{
+	OSShell* pOSShell = GetOSShellObjFromLuaState(luaState);
+	SIZE size;
+	if (pOSShell->GetScreenSize(size))
+	{
+		lua_pushnumber(luaState, size.cx);
+		lua_pushnumber(luaState, size.cy);
+		return 2;
+	}
+	return 0;
 }

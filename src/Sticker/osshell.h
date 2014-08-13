@@ -7,6 +7,7 @@ public:
 	OSShell();
 	~OSShell();
 	
+	bool GetScreenSize(SIZE& size);
 };
 
 #endif
